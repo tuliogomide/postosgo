@@ -1,0 +1,29 @@
+{
+	"nomefantasia" : "PIT BULL JEANS",
+	"razaosocial"  : "PIT BULL JEANS INDUSTRIA E COMERCIO DE CONFECCOES LTDA",
+	"matriz"       : "sim",
+	"atividadecod" : "14.12-6-01",
+	"cnpj"         : "06960968000146",
+	"telefone"     : "(62) 3095-2426 / (62) 3095-3858",
+	"logradouro"   : "AV PERIMETRAL",
+	"numero"       : "791",
+	"bairro"       : "SETOR DOS FUNCIONARIOS",
+	"municipio"    : "GOIANIA",
+	"complemento"  : "QUADRA: P-88; LOTE: 9 10 E 11;",
+	"uf"           : "GO",
+	"cep"          : "74.543-175",
+	"senha"        : "12345"
+}
+
+
+{ 
+	"nome"  : "Tênis Puma Enzo",
+	"marca" : "Puma",
+	"genero": "Masculino",
+	"descricao" : " Confortável e barato",
+	"valor" : "300,00",
+	"tamanho": ["39","40"],
+	"cor" : ["verde","amarelo","azul"],
+	"categoria" : ["sapato", "moda masculina"]
+
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/materialize.css">       
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/index.css">
+  <script type="text/javascript" src="/js/xlsx.full.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<title>Projeto Repplica</title>
+	<base href="/">
+
+	
+
+</head>
+<body>
+  <style type="text/css">
+    .f-nav{ z-index: 9999; position: fixed; left: 0; top: 0;}
+  </style>
+
+	
+    	<div id="app" ></div>
+	
+	<script src="/js/app.min.js"></script>
+	<!-- JavaScript -->
+<!--  <script src="../js/nouislider.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    	 
+      M.AutoInit();
+
+$(window).on('scroll load', function(){
+   var win_scl = $(window).scrollTop(); // valor do scroll da janela
+   var nav = $('.nav-content'); // menu
+   var nav_ant = $('.nav-wrapper'); // div antes do menu
+   var nav_hgt = nav.outerHeight(); // altura do menu
+   var nav_ant_hgt = nav_ant.outerHeight(); // altura da div antes do menu
+   var nav_ant_top = nav_ant.offset().top; // distância da div antes do menu ao topo
+   var nav_ant_dst = nav_ant_top-win_scl; // distancia do final da div antes do menu ao topo da janela
+
+   if(nav_ant_dst <= nav_ant_hgt && win_scl > nav_ant_hgt) {
+      nav.css('position','fixed');
+      nav.css('z-index','99999');
+      nav.css('top','0');
+      nav.css('left','0');
+      nav.css('width','100%');
+      nav.css('background','#368DFF');
+      nav.css('boxShadow','0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)');
+       // adiciono margem superior à primeira div depois do menu
+      $(".nav-content+section").css('margin-top',nav_hgt+'px');
+      nav_ant.css('margin-bottom',nav_hgt+'px');
+      
+   }else{
+      nav.css('position','relative');
+      nav.css('z-index','');
+      nav.css('width','100%');
+      nav.css('boxShadow','');
+       // retiro margem superior à primeira div depois do menu
+      $(".nav-content+section").css('margin-top','0');
+      nav_ant.css('margin-bottom','0px');
+   }
+});
+
+document.getElementById('test5').value=3;
+
+
+       
+    </script>
+
+	
+
+    
+
+
+</body>
+</html>

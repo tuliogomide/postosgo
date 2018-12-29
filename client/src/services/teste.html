@@ -1,0 +1,25 @@
+<script>
+
+function CalcRadiusDistance(lat1, lon1, lat2, lon2) {
+    var RADIUSMILES = 3961,
+        RADIUSKILOMETERS = 6373,
+        latR1 = lat1 * Math.PI / 180,
+        lonR1 = lon1 * Math.PI / 180,
+        latR2 = lat2 * Math.PI / 180,
+        lonR2 = lon2 * Math.PI / 180,
+        latDifference = latR2 - latR1,
+        lonDifference = lonR2 - lonR1,
+        a  = Math.pow(Math.sin(latDifference / 2), 2) + Math.cos(latR1) * Math.cos(latR2) * Math.pow(Math.sin(lonDifference / 2), 2),
+        c  = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
+        dm = c * RADIUSMILES,
+        dk = c * RADIUSKILOMETERS;
+    	return Math.round(dk* 10) / 10;
+}
+
+</script>
+
+<script>
+    
+    console.log(CalcRadiusDistance(-16.666307,-49.288687,-16.710611, -49.236667));
+
+</script>

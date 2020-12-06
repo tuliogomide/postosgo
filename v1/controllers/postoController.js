@@ -66,7 +66,6 @@ exports.novoPosto = function (dados, token, callback) {
 exports.postoProcura = function (municipio, ordem, origem, callback) {
 
   Posto.listSearch(retira_acentos(municipio).toUpperCase(), ordem, function (resp) {
-    console.log()
     var postos = [];
     var destinos = "";
     for (let i = 0; i < resp.postos.length; i++) {

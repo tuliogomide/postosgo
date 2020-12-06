@@ -8,5 +8,4 @@ mongoose.connect(urlString, function (err, res) {
   else {
     console.log('conectado a: ' + urlString);
   }
-
 });

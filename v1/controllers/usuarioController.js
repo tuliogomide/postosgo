@@ -1,7 +1,5 @@
 var Usuario = require('../models/Usuario');
 
-
-
 exports.novoUsuario = function(token, dados, callback){
   Usuario.authorize(token, function(resp){
     if(resp!=false){

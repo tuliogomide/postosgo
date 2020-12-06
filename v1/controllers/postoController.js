@@ -71,7 +71,7 @@ exports.postoProcura = function (municipio, ordem, origem, callback) {
     var destinos = "";
     for (let i = 0; i < resp.postos.length; i++) {
       var raio = CalcRadiusDistance(Number(origem.lat), Number(origem.lng), Number(resp.postos[i].lat), Number(resp.postos[i].lng));
-      if (raio < 20 && postos.length < 25) {
+      if (raio < 10 && postos.length < 25) {
         postos.push(resp.postos[i]);
         postos[postos.length - 1].raio = raio;
       }

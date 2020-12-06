@@ -14,7 +14,7 @@ function pegarToken(req, res, next) {
 
 router.post('/cadastrar', pegarToken, function (req, res) {
   var token = req.token;
-  var dados = JSON.parse(req.body.dados);
+  var dados = req.body;  
   usuarioController.novoUsuario(token, dados, function (resp) {
     res.json(resp);
   });

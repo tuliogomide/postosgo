@@ -66,7 +66,7 @@ export default class Main extends Component {
                   <div className="col l9 m9 s9">
                     <form action="#">
                       <p className="range-field">
-                        <input type="range" id="test5" min="1" max="7" step="1" onChange={this.setFilter.bind(this)} />
+                        <input type="range" id="test5" min="1" max="40" step="1" onChange={this.setFilter.bind(this)} />
                       </p>
                     </form>
                   </div>

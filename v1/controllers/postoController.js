@@ -66,23 +66,24 @@ exports.novoPosto = function (dados, token, callback) {
 exports.postoProcura = function (municipio, ordem, origem, callback) {
 
   Posto.listSearch(retira_acentos(municipio).toUpperCase(), ordem, function (resp) {
+    console.log()
     var postos = [];
     var destinos = "";
     for (let i = 0; i < resp.postos.length; i++) {
       var raio = CalcRadiusDistance(Number(origem.lat), Number(origem.lng), Number(resp.postos[i].lat), Number(resp.postos[i].lng));
-      if (raio < 4 && postos.length < 100) {
+      if (raio < 15 && postos.length < 25) {
         postos.push(resp.postos[i]);
         postos[postos.length - 1].raio = raio;
       }
 
     }
     postos = postos.sort(function (a, b) { return a.raio - b.raio });
-    for (let i = 0; i < postos.length && i < 100; i++) {
+    for (let i = 0; i < postos.length && i < 25; i++) {
       destinos += postos[i].lat + "," + postos[i].lng + "|";
     }
 
     GoogleApi.retornaDistancia(origem.lat + "," + origem.lng, destinos, function (resp2) {
-      for (let i = 0; i < postos.length && i < 100; i++) {
+      for (let i = 0; i < postos.length && i < 25; i++) {
         postos[i].rota = resp2.rows[0].elements[i];
       }
       postos = postos.sort(function (a, b) { return a.rota.distance.value - b.rota.distance.value });

@@ -11,10 +11,9 @@ var UsuarioSchema = new Schema({
 
 Usuario = mongoose.model('Usuario', UsuarioSchema);
 
-function gerarToken(nome, senha) {
+function gerarToken(nome) {
   return jwt.sign({
     'nome': nome,
-    'senha': senha
   }, 'fbbdf33639da90cc80adf56732c41cb30772b61c');
 }
 
@@ -52,7 +51,7 @@ exports.create = function (dados, callback) {
       new Usuario({
         'nome': dados.nome,
         'senha': gerarSenha(dados.senha),
-        'token': gerarToken(dados.nome, dados.senha)
+        'token': gerarToken(dados.nome)
 
 
       }).save(function (erro, Usuario) {

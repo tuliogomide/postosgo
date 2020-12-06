@@ -1,0 +1,18 @@
+{
+    "_id" : ObjectId("5fccfecc00018a1398b61b28"),
+    "razao_social" : "POSTO Z + Z T9 LTDA",
+    "nome_fantasia" : "HIPER MOREIRA AUTO CENTER",
+    "municipio" : "GOIANIA",
+    "bairro" : "JARDIM AMERICA",
+    "endereco_completo" : "Av. Castelo Branco, 2055 - St. Oeste, Goiânia - GO, 74140-150, Brazil",
+    "diesel_comum" : 0,
+    "diesel_s10_comum" : 3.49,
+    "etanol_comum" : 3.19,
+    "gasolina_comum" : 4.59,
+    "lng" : "-49.278127",
+    "lat" : "-16.6869439",
+    "tags" : "0",
+    "favoritos" : 0,
+    "ultima_atualizacao" : "domingo, 6 de dezembro de 2020 às 13 : 54 : 52",
+    "__v" : 0
+}

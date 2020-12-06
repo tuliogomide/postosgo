@@ -1,0 +1,7 @@
+{
+    "_id" : ObjectId("5fcd41e3691a042ecce7a8e4"),
+    "nome" : "teste",
+    "senha" : "$2a$09$zxo44bIgiU9eYw67upyL6OY.MWr5yLQTNndaisEg0OeBKWl0JUIpi",
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoidGVzdGUiLCJpYXQiOjE2MDcyODcyNjd9.52_qQVBhGBBBIWo3yHmYGfzEfqEDeycrdSV-7K1RY6M",
+    "__v" : 0
+}

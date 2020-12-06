@@ -2,22 +2,20 @@ import React from 'react';
 
 
 export default class Cursos extends React.Component {
-	constructor(){
-		super();
-	}
+  constructor() {
+    super();
+  }
 
-	
+  render() {
 
-	render() {
+    var style = {
+      width: '18rem'
+    }
+    return (
 
-		var style = {
-		width: '18rem'
-	}
-		return (
-
-			<div className="card" style={style}>
-  				teste
-			</div>
-		);
-	}
+      <div className="card" style={style}>
+        teste
+      </div>
+    );
+  }
 }

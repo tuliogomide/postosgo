@@ -1,21 +1,14 @@
 import React from 'react';
 import 'babel-polyfill';
-<<<<<<< HEAD
 import ApiPosto from '@services/ApiPosto';
 
-=======
-import ApiPosto from '../../src/services/ApiPosto';
->>>>>>> parent of 618b2e8... refatoração do login
+const NovoPosto = () => {
 
-
-
-export default class NovoPosto extends React.Component {
-
-  finish() {
+  const finish = () => {
     document.getElementsByClassName('progress')[0].style.visibility = "hidden";
   }
 
-  handleFile() {
+  const handleFile = () => {
     document.getElementsByClassName('progress')[0].style.visibility = "";
     var files = document.querySelector('#myFile').files[0];
     var reader = new FileReader();
@@ -39,8 +32,6 @@ export default class NovoPosto extends React.Component {
           "diesel_s10_comum": Number(lista["DIESEL S10 COMUM"].replace(",", ".")).replace("undefined", 0),
           "etanol_comum": Number(lista["ETANOL COMUM"].replace(",", ".")).replace("undefined", 0),
           "gasolina_comum": Number(lista["GASOLINA COMUM"].replace(",", ".")).replace("undefined", 0)
-
-
         }
         await ApiPosto.create(localStorage.getItem("token"), dados);
         document.querySelector('#carregando').innerHTML = "Carregando " + (index + 1) + " de " + list.length;
@@ -48,66 +39,51 @@ export default class NovoPosto extends React.Component {
       NovoPosto.finish;
     }
   }
-<<<<<<< HEAD
 
   return (
     <div>
-=======
->>>>>>> parent of 618b2e8... refatoração do login
 
-  render() {
-
-    if (localStorage.getItem("token") == null) {
-      location.href = "/admin";
-    }
-    else {
-      return (
-        <div>
-
-          <nav className="nav-extended">
-            <div className="nav-wrapper">
-              <a href="#" className="brand-logo">Logo</a>
+      <nav className="nav-extended">
+        <div className="nav-wrapper">
+          <a href="#" className="brand-logo">Logo</a>
+        </div>
+        <div className="nav-content">
+        </div>
+      </nav>
+      <br />
+      <div className="row">
+        <br /><br />
+        <div className="col s12 m10 l10 xl6 offset-xl3 offset-l1 offset-m1">
+          <div className="card">
+            <div className="progress" style={{ visibility: "hidden" }}>
+              <div className="indeterminate"></div>
             </div>
-            <div className="nav-content">
-            </div>
-          </nav>
-          <br />
-          <div className="row">
-            <br /><br />
-            <div className="col s12 m10 l10 xl6 offset-xl3 offset-l1 offset-m1">
-              <div className="card">
-                <div className="progress" style={{ visibility: "hidden" }}>
-                  <div className="indeterminate"></div>
-                </div>
-                <center>
-                  <h4 className=""><b>Novo Posto</b></h4>
-                </center>
-                <div className="card-content">
-                  <div className="row">
-                    <div className="col s12 col m10 offset-m1 ">
-                      <form>
-                        <div className="file-field input-field">
-                          <div className="btn">
-                            <span>File</span>
-                            <input id="myFile" type="file" />
-                          </div>
-                          <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" />
-                          </div>
-                        </div>
-                        <br />
-                        <p id="carregando" className="left" style={{ marginTop: "10px" }}></p>
-                        <a className="waves-effect waves-light btn blue-custom right" onClick={this.handleFile}>Subir Lista</a>
-                      </form>
+            <center>
+              <h4 className=""><b>Novo Posto</b></h4>
+            </center>
+            <div className="card-content">
+              <div className="row">
+                <div className="col s12 col m10 offset-m1 ">
+                  <form>
+                    <div className="file-field input-field">
+                      <div className="btn">
+                        <span>File</span>
+                        <input id="myFile" type="file" />
+                      </div>
+                      <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" />
+                      </div>
                     </div>
-                  </div>
+                    <br />
+                    <p id="carregando" className="left" style={{ marginTop: "10px" }}></p>
+                    <a className="waves-effect waves-light btn blue-custom right" onClick={handleFile}>Subir Lista</a>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      )
-    }
-  }
-
+      </div>
+    </div >
+  )
 }

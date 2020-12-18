@@ -1,32 +1,19 @@
-import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Main from '../pages/Main';
-import Login from '../../admin/pages/Login';
+import LoginPage from '../../admin/pages/LoginPage';
 import NovoPosto from '../../admin/pages/NovoPosto';
+import { useSelector } from 'react-redux';
 
+const App = () => {
 
-
-
-class App extends Component {
-  state = {
-    filter: ''
-  }
-
-<<<<<<< HEAD
   const { isAuth, error } = useSelector(state => state.auth);
-=======
->>>>>>> parent of 618b2e8... refatoração do login
 
-  render() {
-    var state = this.state;
-
-    return (
-      <div>
+  return (
+    <div>
+      <Switch>
         <Route exact path="/" render={() => <Main />} />
-<<<<<<< HEAD
         <Route exact path="/admin">
           { (isAuth && !error) ? <Redirect to="/admin/criar" /> : <LoginPage /> }
         </Route>
@@ -36,15 +23,7 @@ class App extends Component {
       </Switch>
     </div>
   );
-=======
-        <Route exact path="/admin" render={() => <Login />} />
-        <Route exact path="/admin/criar" render={() => <NovoPosto />} />
-      </div>
-    );
 
->>>>>>> parent of 618b2e8... refatoração do login
-
-  }
 }
 
 export default App;

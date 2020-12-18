@@ -2,6 +2,8 @@ import React from 'react';
 import 'babel-polyfill';
 import ApiPosto from '@services/ApiPosto';
 
+
+
 const NovoPosto = () => {
 
   const finish = () => {
@@ -32,11 +34,13 @@ const NovoPosto = () => {
           "diesel_s10_comum": Number(lista["DIESEL S10 COMUM"].replace(",", ".")).replace("undefined", 0),
           "etanol_comum": Number(lista["ETANOL COMUM"].replace(",", ".")).replace("undefined", 0),
           "gasolina_comum": Number(lista["GASOLINA COMUM"].replace(",", ".")).replace("undefined", 0)
+
+
         }
         await ApiPosto.create(localStorage.getItem("token"), dados);
         document.querySelector('#carregando').innerHTML = "Carregando " + (index + 1) + " de " + list.length;
       });
-      NovoPosto.finish;
+      finish();
     }
   }
 
@@ -84,6 +88,8 @@ const NovoPosto = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   )
 }
+
+export default NovoPosto;

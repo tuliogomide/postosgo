@@ -10,9 +10,51 @@ router.post('/cadastrar', middlewares.authenticateJWT, function (req, res, next)
 });
 
 router.post("/cadastrar", function (req, res) {
-  var dados = req.body.dados;
+  
+  let dados = new Object();
+
+  if (typeof req.body.razao_social === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo razao_social é requerido.' });
+  else
+    dados.razao_social = req.body.razao_social;
+
+  if (typeof req.body.nome_fantasia === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo nome_fantasia é requerido.' });
+  else
+    dados.nome_fantasia = req.body.nome_fantasia;
+
+  if (typeof req.body.municipio === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo municipio é requerido.' });
+  else
+    dados.municipio = req.body.municipio;
+
+  if (typeof req.body.bairro === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo bairro é requerido.' });
+  else
+    dados.bairro = req.body.bairro;
+
+  if (typeof req.body.diesel_comum === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo diesel_comum é requerido.' });
+  else
+    dados.diesel_comum = req.body.diesel_comum;
+
+  if (typeof req.body.diesel_s10_comum === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo diesel_s10_comum é requerido.' });
+  else
+    dados.diesel_s10_comum = req.body.diesel_s10_comum;
+
+  if (typeof req.body.etanol_comum === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo etanol_comum é requerido.' });
+  else
+    dados.etanol_comum = req.body.etanol_comum;
+
+  if (typeof req.body.gasolina_comum === "undefined")
+    res.status(400).json({ erro: true, mensagem: 'campo gasolina_comum é requerido.' });
+  else
+    dados.gasolina_comum = req.body.gasolina_comum;
+
   postoController.novoPosto(dados, function (resp) {
-    if(resp.erro)
+    if (resp.erro)
       res.status(400).json(resp);
     else
       res.status(200).json(resp);
@@ -28,7 +70,7 @@ router.get("/listar/:lat/:lng/:municipio/:ordem", function (req, res) {
     "lng": req.params.lng
   };
   postoController.postoProcura(municipio, ordem, origem, function (resp) {
-    if(resp.erro)
+    if (resp.erro)
       res.status(400).json(resp);
     else
       res.status(200).json(resp);
@@ -52,7 +94,7 @@ router.put("/alterar/:razao_social", function (req, res) {
   var dados = JSON.parse(req.body.dados);
 
   postoController.alteraPosto(razao_social, dados, function (resp) {
-    if(resp.erro)
+    if (resp.erro)
       res.status(400).json(resp);
     else
       res.status(200).json(resp);
@@ -67,7 +109,7 @@ router.delete('/deletar', middlewares.authenticateJWT, function (req, res, next)
 router.delete("/deletar", function (req, res) {
 
   postoController.deletaPosto(function (resp) {
-    if(resp.erro)
+    if (resp.erro)
       res.status(400).json(resp);
     else
       res.status(200).json(resp);

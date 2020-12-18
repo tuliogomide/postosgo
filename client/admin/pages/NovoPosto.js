@@ -30,10 +30,10 @@ const NovoPosto = () => {
           "bairro": String(lista["Bairro"]),
           "nome_fantasia": String(lista["Nome Fantasia"]).replace("undefined", lista["Razão Social"]),
           "municipio": String(lista["Município"]),
-          "diesel_comum": String(lista["DIESEL COMUM"]).replace("undefined", "0,00"),
-          "diesel_s10_comum": String(lista["DIESEL S10 COMUM"]).replace("undefined", "0,00"),
-          "etanol_comum": String(lista["ETANOL COMUM"]).replace("undefined", "0,00"),
-          "gasolina_comum": String(lista["GASOLINA COMUM"]).replace("undefined", "0,00")
+          "diesel_comum": Number(lista["DIESEL COMUM"].replace(",", ".")).replace("undefined", 0),
+          "diesel_s10_comum": Number(lista["DIESEL S10 COMUM"].replace(",", ".")).replace("undefined", 0),
+          "etanol_comum": Number(lista["ETANOL COMUM"].replace(",", ".")).replace("undefined", 0),
+          "gasolina_comum": Number(lista["GASOLINA COMUM"].replace(",", ".")).replace("undefined", 0)
 
 
         }
@@ -43,6 +43,7 @@ const NovoPosto = () => {
       finish();
     }
   }
+
   return (
     <div>
 

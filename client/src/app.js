@@ -1,25 +1,17 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { ConnectedRouter } from 'connected-react-router/immutable';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, BrowserHistory, Switch } from 'react-router-dom';
+
+
 import App from './components/App';
 
-import configureStore, { history } from './store/index';
+ReactDOM.render((
+	<Router history={BrowserHistory}>		
+		<App />
+	</Router>
+	),
+	document.getElementById("app")
+	
 
-const { persistor, store } = configureStore();
 
-function ReactApp() {
-  return (
-    <div>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </PersistGate>
-      </Provider>
-    </div>
-  );
-}
-
-export default ReactApp;
+);

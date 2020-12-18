@@ -4,20 +4,10 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-
-  resolve: {
-    alias: {
-      '@components': path.resolve(__dirname, 'src', 'components'),
-      '@config': path.resolve(__dirname, 'src', 'config'),
-      '@store': path.resolve(__dirname, 'src', 'store'),
-      '@services': path.resolve(__dirname, 'src', 'services'),
-    }
-  },
-
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./index",
-
+  entry: "./app.js",
+  
   module: {
     loaders: [
 
@@ -39,13 +29,13 @@ module.exports = {
     port: 8080
   },
 
-
+  
   output: {
     path: __dirname + "/public/js/",
     publicPath: "/js/",
     filename: "app.min.js"
   },
-
+  
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),

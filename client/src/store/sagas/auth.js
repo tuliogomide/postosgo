@@ -38,7 +38,7 @@ function* getRefreshToken() {
   } = yield select();
   try {
     yield call(api.setHeader, 'Authorization', `Bearer ${refresh_token}`);
-    const response = yield call(api.post, '/oauth/refresh');
+    const response = yield call(api.post, '/usuario/refresh-token');
     if (response.status !== 200) throw response;
     yield call(
       api.setHeader,
@@ -49,14 +49,15 @@ function* getRefreshToken() {
     yield put(AuthCreators.getLoginRefreshTokenSuccess(response.data));
   } catch (e) {
     if (e.status === 401) {
-      yield put(AuthCreators.getLoginRefreshTokenFailure());
+      yield put(AuthCreators.getLoginRefreshTokenFailure(response.data.menssagem));
+      yield put(push('/admin'));
     }
   }
 }
 
 function* getLogout() {
   yield put(AuthCreators.getLogoutSuccess());
-  yield put(push('/minha-conta'));
+  yield put(push('/admin'));
   yield put(
     NotificationCreators.openNotification({ message: 'Logout realizado com sucesso', type: 'success' })
   );

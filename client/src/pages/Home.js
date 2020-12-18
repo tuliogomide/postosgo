@@ -2,28 +2,27 @@ import React from 'react';
 import Carrossel from '../components/Carrossel';
 
 
-export default class Home extends React.Component {
+const Home = ({ list, loading, location, filter }) => {
 
-  componentWillMount() {
-
+  var style = {
+    width: '18rem'
   }
-  render() {
+  return (
 
-    var style = {
-      width: '18rem'
-    }
-    return (
-
-      <div className="container">
-        <Carrossel filtros={this.props.filtros} />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-      </div>
-    );
-  }
+    <div className="container">
+      <Carrossel 
+        list={list} 
+        location={location}
+        filter={filter}
+      />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  );
 }
+
+export default Home;

@@ -9,7 +9,7 @@ router.post('/cadastrar', middlewares.authenticateJWT, function (req, res, next)
 });
 
 router.post('/cadastrar', function (req, res) {
-  var dados = req.body;  
+  let dados = req.body;  
   usuarioController.novoUsuario(dados, function (resp) {
     if(resp.erro)
       res.status(400).json(resp);
@@ -19,8 +19,8 @@ router.post('/cadastrar', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-  var nome = req.body.nome;
-  var senha = req.body.senha;
+  let nome = req.body.nome;
+  let senha = req.body.senha;
   usuarioController.login(nome, senha, function (resp) {
     if(resp.erro)
       res.status(401).json(resp);
@@ -29,9 +29,10 @@ router.post('/login', function (req, res) {
   });
 });
 
-router.post('/refresh_token', function (req, res) {
-  var refresh_token = req.body.refresh_token;
-  usuarioController.refreshToken(refresh_token, function (resp) {
+router.post('/refresh-token', function (req, res) {
+  let refresh_token = req.headers.authorization;
+  const split_refresh_token = refresh_token.split(' ')[1];
+  usuarioController.refreshToken(split_refresh_token, function (resp) {
     if(resp.erro)
       res.status(401).json(resp);
     else
@@ -44,7 +45,7 @@ router.post('/listar/:id', middlewares.authenticateJWT, function (req, res, next
 });
 
 router.get('/listar/:id', function (req, res) {
-  var id = req.params.id;
+  let id = req.params.id;
   usuarioController.dadosUsuario(id, function (resp) {
     if(resp.erro)
       res.status(400).json(resp);

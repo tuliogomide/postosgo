@@ -1,8 +1,7 @@
 import React from 'react';
 import 'babel-polyfill';
 import ApiPosto from '@services/ApiPosto';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+
 
 
 const NovoPosto = () => {

@@ -56,6 +56,13 @@ export default function (state = initialState, action) {
         loading: false,
         error: null,
       };
+    case Types.GET_REFRESH_TOKEN_FAILURE:
+      return {
+        ...state,
+        isAuth: false,
+        loading: false,
+        error: action.payload,
+      }
     case Types.GET_LOGOUT_SUCCESS:
       return {
         ...state,
@@ -102,8 +109,9 @@ export const Creators = {
     type: Types.GET_REFRESH_TOKEN_SUCCESS,
     payload: data,
   }),
-  getLoginRefreshTokenFailure: () => ({
+  getLoginRefreshTokenFailure: data => ({
     type: Types.GET_REFRESH_TOKEN_FAILURE,
+    payload: data,
   }),
   // Faz o Logout
   getLogoutRequest: () => ({

@@ -35,31 +35,22 @@ function CalcRadiusDistance(lat1, lon1, lat2, lon2) {
 }
 
 
-exports.novoPosto = function (dados, token, callback) {
-  usuarioController.autorizaUsuario(token, function (usuario) {
-    if (usuario !== false) {
-      var endereco = dados.nome_fantasia + ", " + dados.municipio;
-      GoogleApi.retornaDados(endereco, function (resp) {
-        dados.nome_fantasia = retira_acentos(dados.nome_fantasia);
-        dados.lat = resp.geometry.location.lat;
-        dados.lng = resp.geometry.location.lng;
-        dados.endereco_completo = resp.formatted_address;
-        dados.diesel_comum = parseFloat(dados.diesel_comum.replace(",", "."));
-        dados.diesel_s10_comum = parseFloat(dados.diesel_s10_comum.replace(",", "."));
-        dados.etanol_comum = parseFloat(dados.etanol_comum.replace(",", "."));
-        dados.gasolina_comum = parseFloat(dados.gasolina_comum.replace(",", "."));
-        dados.lat = dados.lat.toString();
-        dados.lng = dados.lng.toString();
-        Posto.create(dados, function (resp2) {
-          callback(resp2);
-        });
-
-      });
-
-    }
-    else {
-      callback({ erro: true, mensagem: 'Solicitação negada' });
-    }
+exports.novoPosto = function (dados, callback) {
+  var endereco = dados.nome_fantasia + ", " + dados.municipio;
+  GoogleApi.retornaDados(endereco, function (resp) {
+    dados.nome_fantasia = retira_acentos(dados.nome_fantasia);
+    dados.lat = resp.geometry.location.lat;
+    dados.lng = resp.geometry.location.lng;
+    dados.endereco_completo = resp.formatted_address;
+    dados.diesel_comum = parseFloat(dados.diesel_comum.replace(",", "."));
+    dados.diesel_s10_comum = parseFloat(dados.diesel_s10_comum.replace(",", "."));
+    dados.etanol_comum = parseFloat(dados.etanol_comum.replace(",", "."));
+    dados.gasolina_comum = parseFloat(dados.gasolina_comum.replace(",", "."));
+    dados.lat = dados.lat.toString();
+    dados.lng = dados.lng.toString();
+    Posto.create(dados, function (resp2) {
+      callback(resp2);
+    });
   });
 }
 
@@ -94,36 +85,22 @@ exports.postoProcura = function (municipio, ordem, origem, callback) {
 
 }
 
-exports.alteraPosto = function (razao_social, dados, token, callback) {
-  usuarioController.autorizaUsuario(token, function (usuario) {
-    if (usuario !== false) {
-      if (dados.diesel_comum)
-        dados.diesel_comum = parseFloat(dados.diesel_comum.replace(",", "."));
-      if (dados.diesel_s10_comum)
-        dados.diesel_s10_comum = parseFloat(dados.diesel_s10_comum.replace(",", "."));
-      if (dados.etanol_comum)
-        dados.etanol_comum = parseFloat(dados.etanol_comum.replace(",", "."));
-      if (dados.gasolina_comum)
-        dados.gasolina_comum = parseFloat(dados.gasolina_comum.replace(",", "."));
-      Posto.change(razao_social, dados, function (resp) {
-        callback(resp);
-      });
-    }
-    else {
-      callback({ erro: true, mensagem: 'Token inválido' });
-    }
+exports.alteraPosto = function (razao_social, dados, callback) {
+  if (dados.diesel_comum)
+    dados.diesel_comum = parseFloat(dados.diesel_comum.replace(",", "."));
+  if (dados.diesel_s10_comum)
+    dados.diesel_s10_comum = parseFloat(dados.diesel_s10_comum.replace(",", "."));
+  if (dados.etanol_comum)
+    dados.etanol_comum = parseFloat(dados.etanol_comum.replace(",", "."));
+  if (dados.gasolina_comum)
+    dados.gasolina_comum = parseFloat(dados.gasolina_comum.replace(",", "."));
+  Posto.change(razao_social, dados, function (resp) {
+    callback(resp);
   });
 }
 
-exports.deletaPosto = function (token, callback) {
-  usuarioController.autorizaUsuario(token, function (usuario) {
-    if (usuario !== false) {
-      Posto.delete(function (resp) {
-        callback(resp);
-      });
-    }
-    else {
-      callback({ erro: true, mensagem: "Token inválido" });
-    }
+exports.deletaPosto = function (callback) {
+  Posto.delete(function (resp) {
+    callback(resp);
   });
 }

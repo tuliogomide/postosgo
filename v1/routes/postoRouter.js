@@ -2,27 +2,20 @@ var express = require('express');
 var router = express.Router();
 var postoController = require('../controllers/postoController');
 //var fornecedorController = require('../controllers/fornecedorController');
+var middlewares = require('../middlewares');
 
 
+router.post('/cadastrar', middlewares.authenticateJWT, function (req, res, next) {
+  next();
+});
 
-
-function pegarToken(req, res, next) {
-  var header = req.headers['authorization'];
-  if (typeof header !== 'undefined') {
-    req.token = header;
-    next();
-  } else {
-    res.sendStatus(403);
-  }
-}
-
-
-router.post("/cadastrar", pegarToken, function (req, res) {
-  var token = req.token;
+router.post("/cadastrar", function (req, res) {
   var dados = req.body.dados;
-
-  postoController.novoPosto(dados, token, function (resp) {
-    res.json(resp);
+  postoController.novoPosto(dados, function (resp) {
+    if(resp.erro)
+      res.status(400).json(resp);
+    else
+      res.status(200).json(resp);
   });
 });
 
@@ -35,7 +28,10 @@ router.get("/listar/:lat/:lng/:municipio/:ordem", function (req, res) {
     "lng": req.params.lng
   };
   postoController.postoProcura(municipio, ordem, origem, function (resp) {
-    res.json(resp);
+    if(resp.erro)
+      res.status(400).json(resp);
+    else
+      res.status(200).json(resp);
   });
 });
 
@@ -47,22 +43,34 @@ router.get('/loja/:storeid/:category/:search',function(req, res){
 });
 */
 
-router.put("/alterar/:razao_social", pegarToken, function (req, res) {
-  var token = req.token;
+router.put('/alterar/:razao_social', middlewares.authenticateJWT, function (req, res, next) {
+  next();
+});
+
+router.put("/alterar/:razao_social", function (req, res) {
   var razao_social = req.params.razao_social;
   var dados = JSON.parse(req.body.dados);
 
-  postoController.alteraPosto(razao_social, dados, token, function (resp) {
-    res.json(resp);
+  postoController.alteraPosto(razao_social, dados, function (resp) {
+    if(resp.erro)
+      res.status(400).json(resp);
+    else
+      res.status(200).json(resp);
   });
 });
 
 
-router.delete("/deletar/", pegarToken, function (req, res) {
-  var token = req.token;
+router.delete('/deletar', middlewares.authenticateJWT, function (req, res, next) {
+  next();
+});
 
-  postoController.deletaPosto(token, function (resp) {
-    res.json(resp);
+router.delete("/deletar", function (req, res) {
+
+  postoController.deletaPosto(function (resp) {
+    if(resp.erro)
+      res.status(400).json(resp);
+    else
+      res.status(200).json(resp);
   });
 });
 

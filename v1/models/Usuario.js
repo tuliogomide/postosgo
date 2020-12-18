@@ -3,18 +3,39 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var Schema = mongoose.Schema;
 
+var tools = require('../utils/tools');
+
 var UsuarioSchema = new Schema({
   nome: String,
   senha: String,
-  token: String
+  auth: {
+    token: String,
+    refresh_token: String,
+    status: Number,
+    expired_at: Date,
+  },
 });
 
 Usuario = mongoose.model('Usuario', UsuarioSchema);
 
-function gerarToken(nome) {
-  return jwt.sign({
+function gerarToken(id, nome) {
+
+  let expiredAt = 3600;
+
+  let tokenPayLoad = {
+    'id': id,
     'nome': nome,
-  }, 'fbbdf33639da90cc80adf56732c41cb30772b61c');
+  };
+  let token = jwt.sign(tokenPayLoad, 'fbbdf33639da90cc80adf56732c41cb30772b61c', { expiresIn: expiredAt });
+
+  let refreshTokenPayLoad = {
+    'id': id,
+    'nome': nome,
+    'uniq_token': tools.uniqid()
+  }
+  let refreshToken = jwt.sign(refreshTokenPayLoad, 'fbbdf33639da90cc80adf56732c41cb30772b61c');
+
+  return { token, refreshToken, expiredAt, status: 1 };
 }
 
 function gerarSenha(senha) {
@@ -24,16 +45,17 @@ function validarSenha(senha, UsuarioSenha) {
   return bcrypt.compareSync(senha, UsuarioSenha);
 }
 
-exports.authorize = function (token, callback) {
-  Usuario.findOne({ 'token': token }, function (erro, Usuario) {
+function verificaStatusRefreshToken(refresh_token) {
+
+  return Usuario.findOne({ 'auth.refresh_token': refresh_token, 'auth.status': 1 }, function (erro, usuario) {
     if (erro) {
-      callback(false);
+      return ({ erro: true, mensagem: 'Erro desconhecido' });
     }
-    else if (Usuario) {
-      callback(Usuario);
+    else if (usuario) {
+      return ({ erro: false, mensagem: 'Token Ativo' });
     }
     else {
-      callback(false);
+      return ({ erro: true, mensagem: 'Token inativo' });
     }
   });
 
@@ -51,8 +73,6 @@ exports.create = function (dados, callback) {
       new Usuario({
         'nome': dados.nome,
         'senha': gerarSenha(dados.senha),
-        'token': gerarToken(dados.nome)
-
 
       }).save(function (erro, Usuario) {
         if (erro) {
@@ -66,16 +86,40 @@ exports.create = function (dados, callback) {
 
 }
 
-
-
-
 exports.loginReturn = function (nome, senha, callback) {
-  Usuario.findOne({ 'nome': nome }, function (erro, Usuario) {
+  Usuario.findOne({ 'nome': nome }, function (erro, usuario) {
     if (erro) {
       callback({ erro: true, mensagem: 'Erro desconhecido' });
-    } else if (Usuario) {
-      if (validarSenha(senha, Usuario.senha)) {
-        callback({ erro: false, mensagem: 'Logado com sucesso!', 'token': Usuario.token });
+    } else if (usuario) {
+      if (validarSenha(senha, usuario.senha)) {
+        let auth = gerarToken(usuario.id, usuario.nome);
+        let actualDate = new Date();
+        console.log(actualDate);
+        let expiredAt = actualDate.setSeconds(actualDate.getSeconds() + auth.expiredAt);
+        Usuario.updateOne({ '_id': usuario.id }, {
+          'auth': {
+            'token': auth.token,
+            'refresh_token': auth.refreshToken,
+            'expired_at': expiredAt,
+            'status': auth.status
+          }
+        }, function (erro2, usuario2) {
+          if (erro2) {
+            callback({ erro: true, mensagem: 'Erro desconhecido Auth' });
+          }
+          else if (usuario2) {
+            callback({
+              erro: false,
+              access_token: auth.token,
+              refresh_token: auth.refreshToken,
+              expired_at: auth.expiredAt
+            });
+          }
+          else {
+            callback({ erro: true, mensagem: 'Não foi possível logar.' });
+          }
+        });
+
       } else {
         callback({ erro: true, mensagem: 'Senha incorreta' });
       }
@@ -86,21 +130,75 @@ exports.loginReturn = function (nome, senha, callback) {
   });
 }
 
-/*
-exports.list = function(id, callback){
-  Usuario.findOne({'_id':id}, function(erro, Usuario){
-    if(erro){
-      callback({erro:true, mensagem:'Erro desconhecido'});
+exports.refreshTokenReturn = function (refreshToken, callback) {
+  jwt.verify(refreshToken, 'fbbdf33639da90cc80adf56732c41cb30772b61c', (err, decoded) => {
+    if (err) {
+      callback({ erro: true, mensagem: err.message });
     }
-    else if(Usuario){
-      callback({erro:false, 'cnpj':Usuario.nome});
+    else {
+      let statusRefreshToken = verificaStatusRefreshToken(refreshToken);
+      if (statusRefreshToken.erro) {
+        callback({ erro: true, mensagem: statusRefreshToken.mensagem });
+      }
+      else {
+        Usuario.findOne({ '_id': decoded.id }, function (erro, usuario) {
+          if (erro) {
+            callback({ erro: true, mensagem: 'Erro desconhecido' });
+          } else if (usuario) {
+            let auth = gerarToken(usuario.id, usuario.nome);
+            let actualDate = new Date();
+            console.log(actualDate);
+            let expiredAt = actualDate.setSeconds(actualDate.getSeconds() + auth.expiredAt);
+            Usuario.updateOne({ '_id': usuario.id }, {
+              'auth': {
+                'token': auth.token,
+                'refresh_token': auth.refreshToken,
+                'expired_at': expiredAt,
+                'status': auth.status
+              }
+            }, function (erro2, usuario2) {
+              if (erro2) {
+                callback({ erro: true, mensagem: 'Erro desconhecido Refresh_token' });
+              }
+              else if (usuario2) {
+                callback({
+                  erro: false,
+                  access_token: auth.token,
+                  refresh_token: auth.refreshToken,
+                  expired_at: auth.expiredAt
+                });
+              }
+              else {
+                callback({ erro: true, mensagem: 'Não foi possível logar.' });
+              }
+            });
+
+          } else {
+            callback({ erro: true, mensagem: 'Usuário inexistente' });
+          }
+
+        });
+      }
     }
-    else{
-      callback({erro:true, mensagem:"Usuario não encontrado"});
+
+
+  });
+}
+
+
+exports.list = function (id, callback) {
+  Usuario.findOne({ '_id': id }, function (erro, usuario) {
+    if (erro) {
+      callback({ erro: true, mensagem: 'Erro desconhecido' });
+    }
+    else if (usuario) {
+      callback({ erro: false, usuario: { id: usuario.id, nome: usuario.nome } });
+    }
+    else {
+      callback({ erro: true, mensagem: "Usuario não encontrado" });
     }
   });
 }
-*/
 
 
 

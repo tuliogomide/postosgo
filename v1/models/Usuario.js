@@ -94,7 +94,6 @@ exports.loginReturn = function (nome, senha, callback) {
       if (validarSenha(senha, usuario.senha)) {
         let auth = gerarToken(usuario.id, usuario.nome);
         let actualDate = new Date();
-        console.log(actualDate);
         let expiredAt = actualDate.setSeconds(actualDate.getSeconds() + auth.expiredAt);
         Usuario.updateOne({ '_id': usuario.id }, {
           'auth': {

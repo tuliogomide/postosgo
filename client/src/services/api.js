@@ -7,6 +7,7 @@ const apiUrl = {
 
 const api = create({
   baseURL: process.env.NODE_ENV === 'production' ? apiUrl.prod : apiUrl.hml,
+  timeout: 25000,
   headers: {
     Authorization: '',
   },

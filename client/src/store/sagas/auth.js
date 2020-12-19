@@ -91,10 +91,9 @@ export function* callApi(apiCall) {
     const responseTakeTwo = yield apiCall;
     return responseTakeTwo;
   }
-  if ( response.status === 500 ) {
-    yield put(NotificationCreators.openNotification({ message: response.data.msg, type: 'error' }));
+  else {
+    return response;
   }
-  throw response;
 }
 
 

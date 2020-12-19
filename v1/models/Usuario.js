@@ -33,7 +33,7 @@ function gerarToken(id, nome) {
     'nome': nome,
     'uniq_token': tools.uniqid()
   }
-  let refreshToken = jwt.sign(refreshTokenPayLoad, 'fbbdf33639da90cc80adf56732c41cb30772b61c');
+  let refreshToken = jwt.sign(refreshTokenPayLoad, '6d94ae1a897f3d10b01cadbc8a1224c5');
 
   return { token, refreshToken, expiredAt, status: 1 };
 }
@@ -131,7 +131,7 @@ exports.loginReturn = function (nome, senha, callback) {
 }
 
 exports.refreshTokenReturn = function (refreshToken, callback) {
-  jwt.verify(refreshToken, 'fbbdf33639da90cc80adf56732c41cb30772b61c', (err, decoded) => {
+  jwt.verify(refreshToken, '6d94ae1a897f3d10b01cadbc8a1224c5', (err, decoded) => {
     if (err) {
       callback({ erro: true, mensagem: err.message });
     }

@@ -1,13 +1,7 @@
 import React from 'react';
 
 
-export default class ItemPosto extends React.Component {
-
-  render() {
-
-    var dados = this.props.dados;
-    var lat = this.props.lat;
-    var lng = this.props.lng;
+const ItemPosto = ({ dados, lat, lng }) => {
 
     return (
       <div className="col s12 m4 l4">
@@ -27,11 +21,8 @@ export default class ItemPosto extends React.Component {
           </div>
         </div>
       </div>
-
-
-
-
     );
 
-  }
 }
+
+export default ItemPosto;

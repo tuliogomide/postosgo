@@ -18,7 +18,7 @@ const NovoPosto = () => {
     if(count === 0)
       document.querySelector('#carregando').innerHTML = "";
     else
-    document.querySelector('#carregando').innerHTML = "Carregando " + count + " de " + total;
+      document.querySelector('#carregando').innerHTML = "Carregando " + count + " de " + total;
   },[count]);
 
   React.useEffect(()=>{
@@ -72,7 +72,6 @@ const NovoPosto = () => {
 
   return (
     <div>
-
       <nav className="nav-extended">
         <div className="nav-wrapper">
           <a href="#" className="brand-logo">Logo</a>

@@ -1,6 +1,5 @@
 import React from 'react';
 import 'babel-polyfill';
-import ApiPosto from '@services/ApiPosto';
 import { useDispatch, useSelector } from 'react-redux';
 import { Creators as PostoInsertCreators } from '@store/ducks/posto/insert/postoInsert';
 

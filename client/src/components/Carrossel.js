@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ItemPosto from './ItemPosto';
-import ApiPosto from '../services/ApiPosto';
 
 
 const Carrossel = ({ list, location, filter }) => {

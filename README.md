@@ -1,4 +1,4 @@
-# postosgo
+# melhores preços de postos de combustíveis em goiás por localização
 
 - executar yarn install na pasta inicial e na pasta client
 - executar npm run server na pasta inicial e npm run dev na pasta client

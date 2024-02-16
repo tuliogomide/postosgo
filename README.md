@@ -5,5 +5,5 @@
 - criar tabela usuarios no mongo e inserir o usuário teste de exemplo
 - acessar /admin, logar (usuario: teste, senha: teste) e inserir a tabela Combustiveis.xlsx
 
-Veja também a versão v2 em produção no site:
+Veja também a v2 em produção no site:
 postosgo.com.br

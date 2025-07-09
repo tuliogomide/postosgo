@@ -1,9 +1,9 @@
 # melhores preços de postos de combustíveis em goiás por localização
 
-- executar yarn install na pasta inicial e na pasta client
-- executar npm run server na pasta inicial e npm run dev na pasta client
-- criar tabela usuarios no mongo e inserir o usuário teste de exemplo
-- acessar /admin, logar (usuario: teste, senha: teste) e inserir a tabela Combustiveis.xlsx
+- Run yarn install in both the root folder and the client folder.
+- Execute npm run server in the root folder and npm run dev in the client folder.
+- Create the "users" table in MongoDB and insert the example test user.
+- Access /admin, log in (username: teste, password: teste), and insert the Combustiveis.xlsx table.
 
-Veja também a v2 em produção no site:
+Also, check out v2 in production on the website:
 postosgo.com.br
